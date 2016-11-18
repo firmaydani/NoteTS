@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="id.sch.smktelkom_mlg.project.xiirpl108182838.notets.DaftarCatatanActivity" >
 
-</LinearLayout>
+    <item
+        android:id="@+id/add_catatan"
+        android:title="Tambah"
+        app:showAsAction="always|withText"/>
+
+</menu>
