@@ -18,10 +18,10 @@ Keunggulan aplikasi ini
 Link APK:
 https://drive.google.com/open?id=0B1L0ihA6fH6jcTh3T2V0Nm9VME0
 
-Kelompok 8
-- Amalia risky              
-- Firmaydani Wahyu Alamsyah
-- Muhammad Zhorif
-- Trischa Nur Laila
+Kelompok 8 Kelas XIIRPL1
+- Amalia risky (8)             
+- Firmaydani Wahyu Alamsyah (18)
+- Muhammad Zhorif Fadhlurrohman (28)
+- Trischa Nur Laila (38)
 
 
