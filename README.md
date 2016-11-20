@@ -15,6 +15,9 @@ Keunggulan aplikasi ini
 ![screenshot_2016-11-20-20-26-45](https://cloud.githubusercontent.com/assets/22192029/20463166/4fc2b306-af60-11e6-8f20-137388eb15f5.png)
 ![screenshot_2016-11-20-20-27-11](https://cloud.githubusercontent.com/assets/22192029/20463167/4fc34866-af60-11e6-915b-adb34496467a.png)
 
+Link APK:
+https://drive.google.com/open?id=0B1L0ihA6fH6jcTh3T2V0Nm9VME0
+
 Kelompok 8
 - Amalia risky              
 - Firmaydani Wahyu Alamsyah
