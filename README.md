@@ -28,30 +28,41 @@ Link APK:
 https://drive.google.com/open?id=0B1L0ihA6fH6jcTh3T2V0Nm9VME0
 
 Kelompok 8 Kelas XIIRPL1
-+ Nama : Amalia Rizki Febriyani 
-  Kelas : XII RPL 1
-  No Urut : 08
-  NIS : 4287/1185.063
-  User github : https://github.com/amaliarizkif 
-  Nama Sekolah : SMK TELKOM MALANG 
-+ Nama : Firmaydani Wahyu Alamsyah
-  Kelas : XII RPL 1
-  No Urut : 18
-  NIS : 4367/1245.063
-  User github : https://github.com/firmaydani
-  Nama Sekolah : SMK TELKOM MALANG 
-+ Nama : Muhammad Zhorif Fadhlurrohman 
-  Kelas : XII RPL 1
-  No Urut : 28
-  NIS : 4393/1291.063
-  User github : https://github.com/zhorif
-  Nama Sekolah : SMK TELKOM MALANG 
-+ Nama : Trischa Nur Laila
-  Kelas : XII RPL 1
-  No Urut : 38
-  NIS : 4454/1352.063
-  User github : https://github.com/trischanurlaila
-  Nama Sekolah : SMK TELKOM MALANG 
+
+Data Diri
+- Nama : Amalia Rizki Febriyani 
+- Kelas : XII RPL 1 
+- No Urut : 08
+- NIS : 4287/1185.063
+- User github : https://github.com/amaliarizkif 
+- Nama Sekolah : SMK TELKOM MALANG 
+
+
+Data Diri
+- Nama : Firmaydani Wahyu Alamsyah
+- Kelas : XII RPL 1
+- No Urut : 18
+- NIS : 4367/1245.063
+- User github : https://github.com/firmaydani
+- Nama Sekolah : SMK TELKOM MALANG 
+
+
+Data Diri
+- Nama : Muhammad Zhorif Fadhlurrohman
+- Kelas : XII RPL 1
+- No Urut : 28
+- NIS : 4393/1291.063
+- User github : https://github.com/zhorif
+- Nama Sekolah : SMK TELKOM MALANG 
+
+
+Data Diri
+- Nama : Trischa Nur Laila
+- Kelas : XII RPL 1
+- No Urut : 38
+- NIS : 4454/1352.063
+- User github : https://github.com/trischanurlaila
+- Nama Sekolah : SMK TELKOM MALANG 
 
 
 
