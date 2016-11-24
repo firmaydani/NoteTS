@@ -117,7 +117,7 @@ public class TambahCatatanActivity extends AppCompatActivity {
                 //jika berhasil disimpan, buat notifikasi
                 //dan pindah ke halam list daftar
                 Toast.makeText(getBaseContext(), "Catatan Berhasil Disimpan", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getBaseContext(), DaftarCatatanActivity.class));
+                startActivity(new Intent(getBaseContext(), TampilanAwal.class));
             } else {
                 Toast.makeText(getBaseContext(), "Ooo, error simpan data. silahkan coba lagi.", Toast.LENGTH_LONG).show();
             }

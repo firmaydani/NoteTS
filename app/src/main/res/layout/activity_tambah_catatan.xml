@@ -1,62 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin"
-    tools:context="id.sch.smktelkom_mlg.project.xiirpl108182838.notets.TambahCatatanActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Judul" />
-
-    <EditText
-        android:id="@+id/txtJudul"
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:ems="10">
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin"
+        tools:context="id.sch.smktelkom_mlg.project.xiirpl108182838.notets.TambahCatatanActivity"
+        android:weightSum="1">
 
-        <requestFocus />
-    </EditText>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Judul">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="warna" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txtJudul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/spWarna"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp" />
+        </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tvJudul"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Catatan" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Uraian">
 
-    <EditText
-        android:id="@+id/txtCatatan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:ems="10"
-        android:gravity="top|left"
-        android:lines="10"></EditText>
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txtCatatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnSimpan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Simpan" />
+        </android.support.design.widget.TextInputLayout>
 
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="warna" />
+
+        <Spinner
+            android:id="@+id/spWarna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+
+        <Button
+            android:id="@+id/btnSimpan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Simpan" />
+
+    </LinearLayout>
+
+
+</ScrollView>
+
+
+
+
+

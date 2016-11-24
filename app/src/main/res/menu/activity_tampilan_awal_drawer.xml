@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_tambah"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="Tambah" />
+        <item
+            android:id="@+id/nav_memo"
+            android:icon="@drawable/ic_layers_black_24dp"
+            android:title="Memo Saya" />
+
+    </group>
+
+
+    <item android:title="Hubungan">
+        <menu>
+            <item
+                android:id="@+id/nav_bagi"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Bagi" />
+            <item
+                android:id="@+id/nav_kirim"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Kirim" />
+        </menu>
+    </item>
+
+    <item android:title="Pengaturan">
+        <menu>
+            <item
+                android:id="@+id/nav_pengaturan"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Pengaturan" />
+            <item
+                android:id="@+id/nav_tentang"
+                android:icon="@drawable/ic_group_black_24dp"
+                android:title="Tentang" />
+        </menu>
+    </item>
+</menu>

@@ -3,21 +3,25 @@ package id.sch.smktelkom_mlg.project.xiirpl108182838.notets;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,8 +31,9 @@ import java.util.ArrayList;
 import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.helper.DBAdapter;
 import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.model.Catatan;
 
-public class DaftarCatatanActivity extends AppCompatActivity {
-
+public class TampilanAwal extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+    public static final int REQUEST_CODE_ADD = 88;
     private ListView listCatatan;
     private ArrayList<Catatan> dataCatatan;
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.3F);
@@ -36,18 +41,53 @@ public class DaftarCatatanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daftar_catatan);
+        setContentView(R.layout.activity_tampilan_awal);
 
         setupView();
 
         ambilData();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goAdd();
+
+
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void goAdd() {
+        startActivityForResult(new Intent(this,TambahCatatanActivity.class), REQUEST_CODE_ADD);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE_ADD&&resultCode==RESULT_OK)
+        {
+
+        }
     }
 
     private void setupView() {
         //koneksikan variabel listCatatan dengan list di layout
         listCatatan = (ListView) findViewById(R.id.lvCatatan);
         //event saat listview diklik pindah ke halaman detail
-        listCatatan.setOnItemClickListener(new OnItemClickListener() {
+        listCatatan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v,
                                     int posisi, long id) {
                 v.startAnimation(buttonClick);
@@ -65,7 +105,7 @@ public class DaftarCatatanActivity extends AppCompatActivity {
             }
         });
         //event saat listview diklik lama untuk edit dan delete
-        listCatatan.setOnItemLongClickListener(new OnItemLongClickListener() {
+        listCatatan.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             public boolean onItemLongClick(AdapterView<?> arg0, View v,
                                            int posisi, long arg3) {
@@ -77,16 +117,14 @@ public class DaftarCatatanActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
-    //dialog edit dan delete
     protected void tampilkanDialog(final Catatan c) {
         String opsiDialog[] = { "Edit Catatan", "Hapus Catatan" };
         AlertDialog.Builder builder = new AlertDialog.Builder(
-                DaftarCatatanActivity.this);
+                TampilanAwal.this);
         builder.setNeutralButton("Tutup",
-                new OnClickListener() {
+                new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog,
                                         int which) {
@@ -96,7 +134,7 @@ public class DaftarCatatanActivity extends AppCompatActivity {
                 });
         builder.setTitle("Edit atau Hapus");
         builder.setItems(opsiDialog,
-                new OnClickListener() {
+                new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -116,9 +154,9 @@ public class DaftarCatatanActivity extends AppCompatActivity {
                                 //saat delete dipilih, tampilkan konfirmasi delete
                                 AlertDialog.Builder builderx = new
                                         AlertDialog.Builder(
-                                        DaftarCatatanActivity.this);
+                                        TampilanAwal.this);
                                 builderx.setNeutralButton("Cancel",
-                                        new OnClickListener() {
+                                        new DialogInterface.OnClickListener() {
 
                                             public void onClick(DialogInterface dialog,int which) {
                                                 dialog.dismiss();
@@ -126,11 +164,11 @@ public class DaftarCatatanActivity extends AppCompatActivity {
 
                                         });
                                 builderx.setPositiveButton("Hapus",
-                                        new OnClickListener() {
+                                        new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface
                                                                         dialog, int which) {
                                                 //koneksi db dan hapus data yang akan dihapus
-                                                DBAdapter db = new DBAdapter(DaftarCatatanActivity.this);
+                                                DBAdapter db = new DBAdapter(TampilanAwal.this);
                                                 db.open();
                                                 db.deleteData(c.getId());
                                                 db.close();
@@ -186,11 +224,21 @@ public class DaftarCatatanActivity extends AppCompatActivity {
 
             // masukkan kedalam custom listview
             //buat adapter dari inner class CustomAdapter
-            CustomAdapter adapter = new CustomAdapter(getBaseContext(), dataCatatan);
+            TampilanAwal.CustomAdapter adapter = new TampilanAwal.CustomAdapter(getBaseContext(), dataCatatan);
             //masukkan adapter ke dalam listView
             listCatatan.setAdapter(adapter);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     // subclass untuk custom adapter pada listview
@@ -252,15 +300,18 @@ public class DaftarCatatanActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // tambahkan menu daftar catatan
-        getMenuInflater().inflate(R.menu.daftar_catatan, menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.tampilan_awal, menu);
         return true;
-        //return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         if (id == R.id.add_catatan) {
             //jika menu diklik akan pindah ke halaman tambah catatan
             Intent i = new Intent(getBaseContext(),
@@ -270,5 +321,31 @@ public class DaftarCatatanActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_tambah) {
+            // Handle the camera action
+        } else if (id == R.id.nav_memo) {
+
+        } else if (id == R.id.nav_bagi) {
+
+        } else if (id == R.id.nav_kirim) {
+
+        } else if (id == R.id.nav_pengaturan) {
+
+        } else if (id == R.id.nav_tentang) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
