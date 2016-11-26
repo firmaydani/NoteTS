@@ -34,8 +34,7 @@ public class DBAdapter {
             + " text not null, " + WARNA_CATATAN
             + " integer not null);";
     private final Context context;
-    private String kolomCatatan[] = {IDCATATAN, TITLE_CATATAN, ISI_CATATAN,
-            TANGGAL_CATATAN, WARNA_CATATAN};
+    private String kolomCatatan[] = {IDCATATAN, TITLE_CATATAN, ISI_CATATAN, TANGGAL_CATATAN, WARNA_CATATAN};
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
 
@@ -78,8 +77,7 @@ public class DBAdapter {
 
     //untuk mangambil data tertentu berdasarkan id
     public Cursor getDataById(int id) {
-        Cursor cursor = db.query(TABEL_CATATAN, kolomCatatan,
-                IDCATATAN + "=" + id, null, null, null, null);
+        Cursor cursor = db.query(TABEL_CATATAN, kolomCatatan, IDCATATAN + "=" + id, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -98,8 +96,7 @@ public class DBAdapter {
     }
 
     private String tglSekarang() {
-        DateFormat dateFormat = new SimpleDateFormat(
-                "dd/MM/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -118,8 +115,7 @@ public class DBAdapter {
         }
 
         @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion,
-                              int newVersion) {
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + TABEL_CATATAN);
             onCreate(db);
         }

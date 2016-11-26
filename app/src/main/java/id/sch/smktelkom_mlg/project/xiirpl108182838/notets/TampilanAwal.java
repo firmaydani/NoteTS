@@ -7,33 +7,34 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.helper.DBAdapter;
 import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.model.Catatan;
 
-public class TampilanAwal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class TampilanAwal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int REQUEST_CODE_ADD = 88;
+    boolean doubleBackToExitPressedOnce = false;
     private ListView listCatatan;
     private ArrayList<Catatan> dataCatatan;
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.3F);
@@ -42,6 +43,9 @@ public class TampilanAwal extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tampilan_awal);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         setupView();
 
@@ -55,8 +59,6 @@ public class TampilanAwal extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 goAdd();
-
-
             }
         });
 
@@ -66,12 +68,12 @@ public class TampilanAwal extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void goAdd() {
-        startActivityForResult(new Intent(this,TambahCatatanActivity.class), REQUEST_CODE_ADD);
+        Intent i = new Intent(getBaseContext(), TambahCatatanActivity.class);
+        i.putExtra("edit", false);
+        startActivity(i);
     }
 
     @Override
@@ -121,10 +123,8 @@ public class TampilanAwal extends AppCompatActivity
 
     protected void tampilkanDialog(final Catatan c) {
         String opsiDialog[] = { "Edit Catatan", "Hapus Catatan" };
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                TampilanAwal.this);
-        builder.setNeutralButton("Tutup",
-                new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TampilanAwal.this);
+        builder.setNeutralButton("Tutup", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog,
                                         int which) {
@@ -133,8 +133,7 @@ public class TampilanAwal extends AppCompatActivity
 
                 });
         builder.setTitle("Edit atau Hapus");
-        builder.setItems(opsiDialog,
-                new DialogInterface.OnClickListener() {
+        builder.setItems(opsiDialog, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -233,12 +232,68 @@ public class TampilanAwal extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+
+        if (doubleBackToExitPressedOnce) {
+            TampilanAwal.super.onBackPressed();
+            return;
         }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_tambah) {
+            // Handle the camera action
+            goAdd();
+        } else if (id == R.id.nav_memo) {
+
+        } else if (id == R.id.nav_pengaturan) {
+
+        } else if (id == R.id.nav_tentang) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     // subclass untuk custom adapter pada listview
@@ -298,54 +353,4 @@ public class TampilanAwal extends AppCompatActivity
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.tampilan_awal, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.add_catatan) {
-            //jika menu diklik akan pindah ke halaman tambah catatan
-            Intent i = new Intent(getBaseContext(),
-                    TambahCatatanActivity.class);
-            i.putExtra("edit", false);
-            startActivity(i);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_tambah) {
-            // Handle the camera action
-        } else if (id == R.id.nav_memo) {
-
-        } else if (id == R.id.nav_bagi) {
-
-        } else if (id == R.id.nav_kirim) {
-
-        } else if (id == R.id.nav_pengaturan) {
-
-        } else if (id == R.id.nav_tentang) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

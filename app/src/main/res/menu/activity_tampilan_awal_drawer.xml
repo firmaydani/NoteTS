@@ -14,18 +14,18 @@
     </group>
 
 
-    <item android:title="Hubungan">
-        <menu>
-            <item
-                android:id="@+id/nav_bagi"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Bagi" />
-            <item
-                android:id="@+id/nav_kirim"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Kirim" />
-        </menu>
-    </item>
+    <!--<item android:title="Hubungan">-->
+    <!--<menu>-->
+    <!--<item-->
+    <!--android:id="@+id/nav_bagi"-->
+    <!--android:icon="@drawable/ic_menu_share"-->
+    <!--android:title="Bagi" />-->
+    <!--<item-->
+    <!--android:id="@+id/nav_kirim"-->
+    <!--android:icon="@drawable/ic_menu_send"-->
+    <!--android:title="Kirim" />-->
+    <!--</menu>-->
+    <!--</item>-->
 
     <item android:title="Pengaturan">
         <menu>
