@@ -1,12 +1,16 @@
 package id.sch.smktelkom_mlg.project.xiirpl108182838.notets;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.helper.DBAdapter;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -54,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         if (id == R.id.edit) {
             Intent i = new Intent(getBaseContext(), TambahCatatanActivity.class);
@@ -65,6 +69,32 @@ public class DetailActivity extends AppCompatActivity {
             i.putExtra("tanggal", this.tanggal);
             i.putExtra("warna", this.warnaDipilih);
             startActivity(i);
+        } else if (id == R.id.delete) {
+            AlertDialog.Builder builderx = new AlertDialog.Builder(DetailActivity.this);
+            builderx.setNeutralButton("Cancel",
+                    new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+
+                    });
+            builderx.setPositiveButton("Hapus",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //koneksi db dan hapus data yang akan dihapus
+                            DBAdapter db = new DBAdapter(DetailActivity.this);
+                            db.open();
+                            db.deleteData(DetailActivity.this.id);
+                            db.close();
+                            Intent intent = new Intent(DetailActivity.this, TampilanAwal.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    });
+            builderx.setTitle("Hapus Catatan");
+            builderx.setMessage("Apakah Anda Yakin Ingin menghapus Catatan ini?");
+            builderx.show();
         }
 
         return super.onOptionsItemSelected(item);

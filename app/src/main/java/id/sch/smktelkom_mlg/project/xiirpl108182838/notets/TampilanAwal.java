@@ -200,7 +200,7 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
     }
 
     //method untuk mengambil semua data catatan dari database
-    private void ambilData() {
+    public void ambilData() {
         dataCatatan = new ArrayList<Catatan>();
         //buat object dari class DBAdapter yang ada di package helper
         DBAdapter db = new DBAdapter(getBaseContext());
@@ -234,16 +234,6 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
             //tutup koneksi database
             db.close();
 
-//            for (int i = 0; i < arJudul.length; i++) {
-//                catList.add(new Hotel(arJudul[i], arDeskripsi[i], arFoto[i]));
-//            }
-//            catAdapter.notifyDataSetChanged();
-
-            // masukkan kedalam custom listview
-            //buat adapter dari inner class CustomAdapter
-//            TampilanAwal.CustomAdapter adapter = new TampilanAwal.CustomAdapter(getBaseContext(), dataCatatan);
-//            //masukkan adapter ke dalam listView
-//            listCatatan.setAdapter(adapter);
         }
 
     }

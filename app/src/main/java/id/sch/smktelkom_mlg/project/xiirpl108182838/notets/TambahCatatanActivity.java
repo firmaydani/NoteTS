@@ -25,8 +25,7 @@ public class TambahCatatanActivity extends AppCompatActivity {
     private boolean isEdit = false;
     private int id = 0;
     //array pilihan warna yang tersedia
-    private String[] warna = {"Kuning", "Merah", "Biru",
-            "Hijau", "Abu-Abu"};
+    private String[] warna = {"Kuning", "Merah", "Biru", "Hijau", "Abu-Abu"};
     private int warnaDipilih;
 
     @Override
