@@ -14,6 +14,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,18 +25,24 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.adapter.ListAdapter;
 import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.helper.DBAdapter;
 import id.sch.smktelkom_mlg.project.xiirpl108182838.notets.model.Catatan;
 
-public class TampilanAwal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TampilanAwal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ListAdapter.IListAdapter {
     public static final int REQUEST_CODE_ADD = 88;
+    public static final String CATATAN = "catatan";
     boolean doubleBackToExitPressedOnce = false;
+    ImageView ListCatatan;
+    ArrayList<Catatan> catList = new ArrayList<>();
+    ListAdapter catAdapter;
     private ListView listCatatan;
     private ArrayList<Catatan> dataCatatan;
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.3F);
@@ -47,7 +55,16 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setupView();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+
+        recyclerView.setLayoutManager(layoutManager);
+        catAdapter = new ListAdapter(this, catList);
+        recyclerView.setAdapter(catAdapter);
+
+        ListCatatan = (ImageView) findViewById(R.id.imageList);
+
+        //setupView();
 
         ambilData();
 
@@ -63,8 +80,7 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -90,8 +106,7 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
         listCatatan = (ListView) findViewById(R.id.lvCatatan);
         //event saat listview diklik pindah ke halaman detail
         listCatatan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> arg0, View v,
-                                    int posisi, long id) {
+            public void onItemClick(AdapterView<?> arg0, View v, int posisi, long id) {
                 v.startAnimation(buttonClick);
                 //ambil catatan sesuai dengan listview yang diambil
                 Catatan c = dataCatatan.get(posisi);
@@ -151,9 +166,7 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
                                 break;
                             case 1:
                                 //saat delete dipilih, tampilkan konfirmasi delete
-                                AlertDialog.Builder builderx = new
-                                        AlertDialog.Builder(
-                                        TampilanAwal.this);
+                                AlertDialog.Builder builderx = new AlertDialog.Builder(TampilanAwal.this);
                                 builderx.setNeutralButton("Cancel",
                                         new DialogInterface.OnClickListener() {
 
@@ -215,29 +228,28 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
                         .getColumnIndexOrThrow(
                                 DBAdapter.WARNA_CATATAN))));
                 //tambahkan ke arraylist dataCatatan
-                dataCatatan.add(c);
+                catList.add(c);
                 cur.moveToNext();
             }
             //tutup koneksi database
             db.close();
 
+//            for (int i = 0; i < arJudul.length; i++) {
+//                catList.add(new Hotel(arJudul[i], arDeskripsi[i], arFoto[i]));
+//            }
+//            catAdapter.notifyDataSetChanged();
+
             // masukkan kedalam custom listview
             //buat adapter dari inner class CustomAdapter
-            TampilanAwal.CustomAdapter adapter = new TampilanAwal.CustomAdapter(getBaseContext(), dataCatatan);
-            //masukkan adapter ke dalam listView
-            listCatatan.setAdapter(adapter);
+//            TampilanAwal.CustomAdapter adapter = new TampilanAwal.CustomAdapter(getBaseContext(), dataCatatan);
+//            //masukkan adapter ke dalam listView
+//            listCatatan.setAdapter(adapter);
         }
 
     }
 
     @Override
     public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
 
         if (doubleBackToExitPressedOnce) {
             TampilanAwal.super.onBackPressed();
@@ -245,7 +257,7 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Tekan BACK lagi untuk keluar", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -294,6 +306,42 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void doClick(final int pos) {
+        //view.startAnimation(buttonClick);
+        //ambil catatan sesuai dengan listview yang diambil
+        Catatan c = catList.get(pos);
+        //buat intent baru
+        Intent i = new Intent(getBaseContext(), DetailActivity.class);
+        //tambahkan data yang mau dikirim ke halaman detail
+        i.putExtra("id", c.getId());
+        i.putExtra("judul", c.getTitle());
+        i.putExtra("isi", c.getIsi());
+        i.putExtra("tanggal", c.getTanggal());
+        i.putExtra("warna", c.getWarna());
+        startActivity(i);
+    }
+
+    @Override
+    public void doEdit(int pos) {
+
+    }
+
+    @Override
+    public void doDelete(int pos) {
+
+    }
+
+    @Override
+    public void doFav(int pos) {
+
+    }
+
+    @Override
+    public void doShare(int pos) {
+
     }
 
     // subclass untuk custom adapter pada listview
@@ -352,5 +400,4 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
         }
 
     }
-
 }

@@ -5,8 +5,8 @@ package id.sch.smktelkom_mlg.project.xiirpl108182838.notets.model;
  */
 
 public class Catatan {
+    public String title, isi, tanggal;
     private int id, warna;
-    private String title, isi, tanggal;
 
     public int getId() {
         return id;
