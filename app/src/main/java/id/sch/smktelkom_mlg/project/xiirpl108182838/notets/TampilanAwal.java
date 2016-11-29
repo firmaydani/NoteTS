@@ -11,11 +11,13 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,7 +44,12 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
     boolean doubleBackToExitPressedOnce = false;
     ImageView ListCatatan;
     ArrayList<Catatan> catList = new ArrayList<>();
+
     ListAdapter catAdapter;
+    ArrayList<Catatan> catListAll = new ArrayList<>();
+    boolean isFiltered;
+    ArrayList<Integer> catListMapFilter = new ArrayList<>();
+    String mQuery;
     private ListView listCatatan;
     private ArrayList<Catatan> dataCatatan;
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.3F);
@@ -262,8 +269,51 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.tampilan_awal, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)
+                MenuItemCompat.getActionView(searchItem);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mQuery = newText.toLowerCase();
+                doFilter(mQuery);
+                return true;
+            }
+        });
         return true;
+    }
+
+    private void doFilter(String query) {
+        if (!isFiltered) {
+            catListAll.clear();
+            catListAll.addAll(catList);
+            isFiltered = true;
+        }
+
+        catList.clear();
+        if (query == null || query.isEmpty()) {
+            catList.addAll(catListAll);
+            isFiltered = false;
+        } else {
+            catListMapFilter.clear();
+            for (int i = 0; i < catListAll.size(); i++) {
+                Catatan catatan = catListAll.get(i);
+                if (catatan.title.toLowerCase().contains(query) ||
+                        catatan.isi.toLowerCase().contains(query) ||
+                        catatan.tanggal.toLowerCase().contains(query)) {
+                    catList.add(catatan);
+                    catListMapFilter.add(i);
+                }
+            }
+        }
+        catAdapter.notifyDataSetChanged();
     }
 
     @Override

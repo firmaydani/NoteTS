@@ -41,6 +41,7 @@ public class DaftarCatatanActivity extends AppCompatActivity {
         setupView();
 
         ambilData();
+
     }
 
     private void setupView() {
@@ -193,6 +194,28 @@ public class DaftarCatatanActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // tambahkan menu daftar catatan
+        getMenuInflater().inflate(R.menu.daftar_catatan, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.add_catatan) {
+//            //jika menu diklik akan pindah ke halaman tambah catatan
+//            Intent i = new Intent(getBaseContext(),
+//                    TambahCatatanActivity.class);
+//            i.putExtra("edit", false);
+//            startActivity(i);
+//            return true;
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
     // subclass untuk custom adapter pada listview
     private class CustomAdapter extends BaseAdapter {
         private Context context;
@@ -248,27 +271,5 @@ public class DaftarCatatanActivity extends AppCompatActivity {
             return vi;
         }
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // tambahkan menu daftar catatan
-        getMenuInflater().inflate(R.menu.daftar_catatan, menu);
-        return true;
-        //return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.add_catatan) {
-            //jika menu diklik akan pindah ke halaman tambah catatan
-            Intent i = new Intent(getBaseContext(),
-                    TambahCatatanActivity.class);
-            i.putExtra("edit", false);
-            startActivity(i);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
