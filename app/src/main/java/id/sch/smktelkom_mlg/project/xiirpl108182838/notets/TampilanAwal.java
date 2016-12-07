@@ -340,12 +340,17 @@ public class TampilanAwal extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_pengaturan) {
 
         } else if (id == R.id.nav_tentang) {
-
+            about();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void about() {
+        Intent i = new Intent(this, about.class);
+        startActivity(i);
     }
 
     @Override
